@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+      uri: http://${SPRING_CONFIG_URI:localhost:8888}
+
+management:
+  security:
+    enabled: false
+
+server:
+  port: 9999
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${SPRING_EUREKA_SERVER:localhost:8761}/eureka/
+
+
+zuul:
+  prefix: /api
+  routes:
+    payments:
+      path: /payments/**
+      serviceId: api-payment
+      stripPrefix: false
+    notifications:
+      path: /notifications/**
+      serviceId: api-notification
+      stripPrefix: false
+    catalogs:
+      path: /catalogs/**
+      serviceId: api-store
+      stripPrefix: false
+
+
+
+info:
+  app:
+    name: API Gateway
+    description: Zuul Routes
+    version: 1.0.0
+    company: i++ Solutions
+    author: Eduardo Wallace

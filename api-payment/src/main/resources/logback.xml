@@ -1,0 +1,45 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <jmxConfigurator/>
+
+    <property name="LOG_PATH" value="/Users/wallace/Apps/spring-cloud-netflix-demo/log/api-payment.log" />
+
+
+    <appender name="asyncFile" class="net.logstash.logback.appender.LoggingEventAsyncDisruptorAppender">
+
+        <appender class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>info</level>
+            </filter>
+            <file>${LOG_PATH}</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}.%d{yyyy-MM-dd}</fileNamePattern>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <includeMdcKeyName>token</includeMdcKeyName>
+                <includeMdcKeyName>orderId</includeMdcKeyName>
+            </encoder>
+
+        </appender>
+
+    </appender>
+
+
+    <!--<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>-->
+
+    <!--<appender name="stashTcp" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>127.0.0.1:5000</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>-->
+
+    <root level="INFO">
+        <!--<appender-ref ref="consoleAppender"/>-->
+        <!--<appender-ref ref="stashTcp"/>-->
+        <appender-ref ref="asyncFile" />
+    </root>
+
+</configuration>

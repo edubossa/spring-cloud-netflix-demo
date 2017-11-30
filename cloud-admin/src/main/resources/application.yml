@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: cloud-admin
+  cloud:
+    config:
+      enabled: false
+
+management:
+  security:
+    enabled: false
+
+server:
+  port: 9090
+
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 10
+  client:
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://${SPRING_EUREKA_SERVER:localhost:8761}/eureka/
+
+info:
+  app:
+    name: Admin Cloud
+    description: Admin Cloud API's
+    version: 1.0.0
+    company: i++ Solutions
+    author: Eduardo Wallace
